@@ -1,6 +1,7 @@
 {
     "name": "plusinfolab/logstation",
     "description": "An elegant log management assistant for Laravel applications - search, filter, export and monitor logs in real-time with a beautiful UI",
+    "version": "1.0.0",
     "keywords": [
         "plusinfolab",
         "laravel",
