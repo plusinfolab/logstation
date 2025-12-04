@@ -49,7 +49,7 @@ class SnippetController
         $snippet = LogSnippet::findOrFail($id);
 
         // Check access
-        if (!$snippet->is_public && $snippet->user_id !== auth()->id()) {
+        if (! $snippet->is_public && $snippet->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
 

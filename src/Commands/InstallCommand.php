@@ -3,11 +3,11 @@
 namespace PlusinfoLab\Logstation\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 
 class InstallCommand extends Command
 {
     protected $signature = 'logstation:install';
+
     protected $description = 'Install LogStation package';
 
     public function handle(): int

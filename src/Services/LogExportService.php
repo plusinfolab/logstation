@@ -30,7 +30,7 @@ class LogExportService
     {
         return response()->streamDownload(function () use ($entries) {
             echo json_encode($entries->toArray(), JSON_PRETTY_PRINT);
-        }, 'logstation-export-' . date('Y-m-d-His') . '.json', [
+        }, 'logstation-export-'.date('Y-m-d-His').'.json', [
             'Content-Type' => 'application/json',
         ]);
     }
@@ -41,7 +41,7 @@ class LogExportService
     protected function exportCsv($entries): StreamedResponse
     {
         return response()->streamDownload(function () use ($entries) {
-            $csv = Writer::createFromFileObject(new \SplTempFileObject());
+            $csv = Writer::createFromFileObject(new \SplTempFileObject);
 
             // Header
             $csv->insertOne([
@@ -72,7 +72,7 @@ class LogExportService
             }
 
             echo $csv->toString();
-        }, 'logstation-export-' . date('Y-m-d-His') . '.csv', [
+        }, 'logstation-export-'.date('Y-m-d-His').'.csv', [
             'Content-Type' => 'text/csv',
         ]);
     }
@@ -84,26 +84,26 @@ class LogExportService
     {
         return response()->streamDownload(function () use ($entries) {
             foreach ($entries as $entry) {
-                echo str_repeat('=', 80) . PHP_EOL;
-                echo "[{$entry->created_at}] {$entry->level_name}: {$entry->message}" . PHP_EOL;
-                echo "Channel: {$entry->channel}" . PHP_EOL;
+                echo str_repeat('=', 80).PHP_EOL;
+                echo "[{$entry->created_at}] {$entry->level_name}: {$entry->message}".PHP_EOL;
+                echo "Channel: {$entry->channel}".PHP_EOL;
 
                 if ($entry->exception_class) {
-                    echo "Exception: {$entry->exception_class}" . PHP_EOL;
-                    echo "File: {$entry->exception_file}:{$entry->exception_line}" . PHP_EOL;
+                    echo "Exception: {$entry->exception_class}".PHP_EOL;
+                    echo "File: {$entry->exception_file}:{$entry->exception_line}".PHP_EOL;
                 }
 
                 if ($entry->request_url) {
-                    echo "URL: {$entry->request_url}" . PHP_EOL;
+                    echo "URL: {$entry->request_url}".PHP_EOL;
                 }
 
                 if ($entry->user_id) {
-                    echo "User: {$entry->user_id}" . PHP_EOL;
+                    echo "User: {$entry->user_id}".PHP_EOL;
                 }
 
                 echo PHP_EOL;
             }
-        }, 'logstation-export-' . date('Y-m-d-His') . '.txt', [
+        }, 'logstation-export-'.date('Y-m-d-His').'.txt', [
             'Content-Type' => 'text/plain',
         ]);
     }

@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Support\Str;
 use PlusinfoLab\Logstation\Facades\Logstation;
 use PlusinfoLab\Logstation\Models\LogEntry;
-use Illuminate\Support\Str;
 
 it('can record a log entry', function () {
     Logstation::recordLog([

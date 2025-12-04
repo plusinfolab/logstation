@@ -2,7 +2,6 @@
 
 namespace PlusinfoLab\Logstation\Storage;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PlusinfoLab\Logstation\Models\LogEntry;
@@ -23,7 +22,7 @@ class DatabaseStorage extends StorageDriver
             unset($entry['tags']);
 
             // Ensure UUID
-            if (!isset($entry['id'])) {
+            if (! isset($entry['id'])) {
                 $entry['id'] = (string) Str::uuid();
             }
 
@@ -31,7 +30,7 @@ class DatabaseStorage extends StorageDriver
             $logEntry = LogEntry::create($entry);
 
             // Create tags
-            if (!empty($tags)) {
+            if (! empty($tags)) {
                 foreach ($tags as $tag) {
                     LogTag::create([
                         'entry_id' => $logEntry->id,
@@ -75,12 +74,12 @@ class DatabaseStorage extends StorageDriver
         $query = LogEntry::query()->with('tags');
 
         // Filter by search term
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $query->search($filters['search']);
         }
 
         // Filter by level
-        if (!empty($filters['level'])) {
+        if (! empty($filters['level'])) {
             if (is_array($filters['level'])) {
                 $query->whereIn('level_name', $filters['level']);
             } else {
@@ -89,37 +88,37 @@ class DatabaseStorage extends StorageDriver
         }
 
         // Filter by channel
-        if (!empty($filters['channel'])) {
+        if (! empty($filters['channel'])) {
             $query->byChannel($filters['channel']);
         }
 
         // Filter by date range
-        if (!empty($filters['start_date'])) {
+        if (! empty($filters['start_date'])) {
             $query->byDateRange($filters['start_date'], $filters['end_date'] ?? null);
         }
 
         // Filter by tag
-        if (!empty($filters['tag'])) {
+        if (! empty($filters['tag'])) {
             $query->withTag($filters['tag']);
         }
 
         // Filter by user
-        if (!empty($filters['user_id'])) {
+        if (! empty($filters['user_id'])) {
             $query->byUser($filters['user_id']);
         }
 
         // Filter by batch
-        if (!empty($filters['batch_id'])) {
+        if (! empty($filters['batch_id'])) {
             $query->where('batch_id', $filters['batch_id']);
         }
 
         // Filter by request ID
-        if (!empty($filters['request_id'])) {
+        if (! empty($filters['request_id'])) {
             $query->where('request_id', $filters['request_id']);
         }
 
         // Filter by timestamp (for live streaming)
-        if (!empty($filters['since'])) {
+        if (! empty($filters['since'])) {
             $query->bySince($filters['since']);
         }
 
@@ -133,7 +132,6 @@ class DatabaseStorage extends StorageDriver
             return $query->paginate($perPage);
         }
 
-
         return $query->get();
     }
 
@@ -144,7 +142,7 @@ class DatabaseStorage extends StorageDriver
     {
         $entry = LogEntry::find($id);
 
-        if (!$entry) {
+        if (! $entry) {
             return false;
         }
 

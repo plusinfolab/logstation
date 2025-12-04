@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 class PublishCommand extends Command
 {
     protected $signature = 'logstation:publish {--force : Overwrite existing files}';
+
     protected $description = 'Publish LogStation assets';
 
     public function handle(): int

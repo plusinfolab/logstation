@@ -2,7 +2,6 @@
 
 namespace PlusinfoLab\Logstation\Storage;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use PlusinfoLab\Logstation\Models\LogEntry;
@@ -10,6 +9,7 @@ use PlusinfoLab\Logstation\Models\LogEntry;
 class FileStorage extends StorageDriver
 {
     protected string $storagePath;
+
     protected int $maxFiles;
 
     public function __construct()
@@ -24,7 +24,7 @@ class FileStorage extends StorageDriver
         $this->maxFiles = config('logstation.storage.max_files', 30);
 
         // Ensure storage directory exists
-        if (!File::exists($this->storagePath)) {
+        if (! File::exists($this->storagePath)) {
             File::makeDirectory($this->storagePath, 0755, true);
         }
     }
@@ -35,15 +35,15 @@ class FileStorage extends StorageDriver
     public function store(array $entry): void
     {
         $filename = $this->getCurrentFilename();
-        $filepath = $this->storagePath . '/' . $filename;
+        $filepath = $this->storagePath.'/'.$filename;
 
         // Ensure UUID
-        if (!isset($entry['id'])) {
+        if (! isset($entry['id'])) {
             $entry['id'] = (string) Str::uuid();
         }
 
         // Append to file
-        File::append($filepath, json_encode($entry) . PHP_EOL);
+        File::append($filepath, json_encode($entry).PHP_EOL);
 
         // Rotate files if needed
         $this->rotateFiles();
@@ -178,9 +178,9 @@ class FileStorage extends StorageDriver
             'total' => $entries->count(),
             'by_level' => $entries->groupBy('level_name')->map->count()->toArray(),
             'by_channel' => $entries->groupBy('channel')->map->count()->toArray(),
-            'today' => $entries->filter(fn($e) => $e->created_at->isToday())->count(),
-            'this_week' => $entries->filter(fn($e) => $e->created_at->isCurrentWeek())->count(),
-            'this_month' => $entries->filter(fn($e) => $e->created_at->isCurrentMonth())->count(),
+            'today' => $entries->filter(fn ($e) => $e->created_at->isToday())->count(),
+            'this_week' => $entries->filter(fn ($e) => $e->created_at->isCurrentWeek())->count(),
+            'this_month' => $entries->filter(fn ($e) => $e->created_at->isCurrentMonth())->count(),
         ];
     }
 
@@ -189,7 +189,7 @@ class FileStorage extends StorageDriver
      */
     protected function getCurrentFilename(): string
     {
-        return 'logstation-' . date('Y-m-d') . '.log';
+        return 'logstation-'.date('Y-m-d').'.log';
     }
 
     /**
@@ -197,7 +197,7 @@ class FileStorage extends StorageDriver
      */
     protected function getLogFiles(): array
     {
-        $files = File::glob($this->storagePath . '/logstation-*.log');
+        $files = File::glob($this->storagePath.'/logstation-*.log');
 
         // Sort by modification time, newest first
         usort($files, function ($a, $b) {
@@ -228,15 +228,15 @@ class FileStorage extends StorageDriver
      */
     protected function matchesFilters(array $entry, array $filters): bool
     {
-        if (!empty($filters['level']) && $entry['level_name'] !== $filters['level']) {
+        if (! empty($filters['level']) && $entry['level_name'] !== $filters['level']) {
             return false;
         }
 
-        if (!empty($filters['channel']) && $entry['channel'] !== $filters['channel']) {
+        if (! empty($filters['channel']) && $entry['channel'] !== $filters['channel']) {
             return false;
         }
 
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $search = strtolower($filters['search']);
             $message = strtolower($entry['message'] ?? '');
 
