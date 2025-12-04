@@ -41,7 +41,7 @@ class SearchController
                 ->flatten()
                 ->pluck('tag')
                 ->unique()
-                ->filter(fn($tag) => str_contains($tag, $query))
+                ->filter(fn ($tag) => str_contains($tag, $query))
                 ->take(10)
                 ->values(),
             default => [],

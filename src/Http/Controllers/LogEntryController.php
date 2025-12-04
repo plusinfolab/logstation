@@ -4,7 +4,6 @@ namespace PlusinfoLab\Logstation\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PlusinfoLab\Logstation\Facades\Logstation;
-use PlusinfoLab\Logstation\Models\LogEntry;
 
 class LogEntryController
 {
@@ -35,7 +34,6 @@ class LogEntryController
             $filters['since'] = $since;
         }
 
-
         // Get latest logs without pagination (limit to 100 for safety)
         $logs = Logstation::search($filters, -1);
 
@@ -58,7 +56,7 @@ class LogEntryController
     {
         $log = Logstation::find($id);
 
-        if (!$log) {
+        if (! $log) {
             abort(404, 'Log entry not found');
         }
 
@@ -72,7 +70,7 @@ class LogEntryController
     {
         $deleted = Logstation::delete($id);
 
-        if (!$deleted) {
+        if (! $deleted) {
             return response()->json(['error' => 'Log entry not found'], 404);
         }
 

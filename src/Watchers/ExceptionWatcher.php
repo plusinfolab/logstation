@@ -3,7 +3,6 @@
 namespace PlusinfoLab\Logstation\Watchers;
 
 use Illuminate\Foundation\Exceptions\Handler;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use PlusinfoLab\Logstation\Facades\Logstation;
 use Throwable;
@@ -24,7 +23,8 @@ class ExceptionWatcher
     {
         // Hook into exception handler
         app()->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, function ($app) {
-            return new class($app) extends Handler {
+            return new class($app) extends Handler
+            {
                 public function report(Throwable $exception)
                 {
                     if ($this->shouldReport($exception)) {
@@ -42,7 +42,7 @@ class ExceptionWatcher
      */
     public function recordException(Throwable $exception): void
     {
-        if (!$this->shouldRecord($exception)) {
+        if (! $this->shouldRecord($exception)) {
             return;
         }
 
@@ -85,7 +85,7 @@ class ExceptionWatcher
         // Add tags
         $entry['tags'] = [
             'exception',
-            'exception:' . class_basename($exception),
+            'exception:'.class_basename($exception),
         ];
 
         Logstation::recordLog($entry);

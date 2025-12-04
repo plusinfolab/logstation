@@ -24,7 +24,7 @@ class ExportController
 
         $allowedFormats = config('logstation.export.formats', ['json', 'csv', 'txt']);
 
-        if (!in_array($format, $allowedFormats)) {
+        if (! in_array($format, $allowedFormats)) {
             return response()->json(['error' => 'Invalid export format'], 400);
         }
 

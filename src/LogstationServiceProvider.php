@@ -3,7 +3,6 @@
 namespace PlusinfoLab\Logstation;
 
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
 use PlusinfoLab\Logstation\Commands\ClearCommand;
 use PlusinfoLab\Logstation\Commands\InstallCommand;
 use PlusinfoLab\Logstation\Commands\PruneCommand;
@@ -42,8 +41,8 @@ class LogstationServiceProvider extends PackageServiceProvider
             $driver = config('logstation.driver', 'database');
 
             return match ($driver) {
-                'file' => new FileStorage(),
-                default => new DatabaseStorage(),
+                'file' => new FileStorage,
+                default => new DatabaseStorage,
             };
         });
 
@@ -51,7 +50,6 @@ class LogstationServiceProvider extends PackageServiceProvider
         $this->app->singleton('logstation', function ($app) {
             return new Logstation($app->make(StorageDriver::class));
         });
-
 
         // Register the facade alias
         $this->app->alias(Logstation::class, 'logstation');
@@ -62,7 +60,7 @@ class LogstationServiceProvider extends PackageServiceProvider
         // Determine if LogStation is enabled (default to enabled in non-production)
         $enabled = config('logstation.enabled');
         if ($enabled === null) {
-            $enabled = !app()->environment('production');
+            $enabled = ! app()->environment('production');
         }
 
         // Register routes
@@ -81,12 +79,12 @@ class LogstationServiceProvider extends PackageServiceProvider
         // Publish assets
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../public' => public_path('vendor/logstation'),
+                __DIR__.'/../public' => public_path('vendor/logstation'),
             ], 'logstation-assets');
 
             // Publish config for customization
             $this->publishes([
-                __DIR__ . '/../config/logstation.php' => config_path('logstation.php'),
+                __DIR__.'/../config/logstation.php' => config_path('logstation.php'),
             ], 'logstation-config');
         }
     }
@@ -96,7 +94,7 @@ class LogstationServiceProvider extends PackageServiceProvider
      */
     protected function registerRoutes(): void
     {
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**

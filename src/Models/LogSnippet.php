@@ -47,6 +47,7 @@ class LogSnippet extends Model
     public function getConnectionName()
     {
         $connection = config('logstation.database.connection');
+
         return $connection ?: config('database.default');
     }
 

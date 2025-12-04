@@ -18,7 +18,7 @@ class Logstation
      */
     public function recordLog(array $entry): void
     {
-        if (!config('logstation.enabled', true)) {
+        if (! config('logstation.enabled', true)) {
             return;
         }
 
@@ -30,7 +30,7 @@ class Logstation
      */
     public function recordBatch(array $entries): void
     {
-        if (!config('logstation.enabled', true)) {
+        if (! config('logstation.enabled', true)) {
             return;
         }
 
@@ -92,8 +92,9 @@ class Logstation
     {
         $enabled = config('logstation.enabled');
         if ($enabled === null) {
-            return !app()->environment('production');
+            return ! app()->environment('production');
         }
+
         return (bool) $enabled;
     }
 }

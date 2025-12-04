@@ -29,7 +29,7 @@ class LogWatcher
      */
     public function recordLog(MessageLogged $event): void
     {
-        if (!$this->shouldRecord($event)) {
+        if (! $this->shouldRecord($event)) {
             return;
         }
 
@@ -71,7 +71,7 @@ class LogWatcher
             $user = auth()->user();
             $entry['user_id'] = $user?->id ?? $user?->getAuthIdentifier();
             $entry['user_email'] = $user?->email ?? null;
-        }else{
+        } else {
             $entry['user_id'] = null;
             $entry['user_email'] = null;
         }
@@ -91,15 +91,15 @@ class LogWatcher
     {
         // Check if level is enabled
         $levels = $this->config['levels'] ?? [];
-        if (!empty($levels) && !in_array($event->level, $levels)) {
+        if (! empty($levels) && ! in_array($event->level, $levels)) {
             return false;
         }
 
         // Check if channel is enabled (only if channel is explicitly provided in context)
         $channels = $this->config['channels'] ?? [];
-        if (!empty($channels) && isset($event->context['channel'])) {
+        if (! empty($channels) && isset($event->context['channel'])) {
             $channel = $event->context['channel'];
-            if (!in_array($channel, $channels)) {
+            if (! in_array($channel, $channels)) {
                 return false;
             }
         }
@@ -129,20 +129,20 @@ class LogWatcher
         $tags = [];
         $tagConfig = config('logstation.tags', []);
 
-        if ($tagConfig['user_id'] ?? false && !empty($entry['user_id'])) {
-            $tags[] = 'user:' . $entry['user_id'];
+        if ($tagConfig['user_id'] ?? false && ! empty($entry['user_id'])) {
+            $tags[] = 'user:'.$entry['user_id'];
         }
 
-        if ($tagConfig['request_id'] ?? false && !empty($entry['request_id'])) {
-            $tags[] = 'request:' . $entry['request_id'];
+        if ($tagConfig['request_id'] ?? false && ! empty($entry['request_id'])) {
+            $tags[] = 'request:'.$entry['request_id'];
         }
 
-        if ($tagConfig['session_id'] ?? false && !empty($entry['session_id'])) {
-            $tags[] = 'session:' . $entry['session_id'];
+        if ($tagConfig['session_id'] ?? false && ! empty($entry['session_id'])) {
+            $tags[] = 'session:'.$entry['session_id'];
         }
 
-        if ($tagConfig['ip_address'] ?? false && !empty($entry['request_ip'])) {
-            $tags[] = 'ip:' . $entry['request_ip'];
+        if ($tagConfig['ip_address'] ?? false && ! empty($entry['request_ip'])) {
+            $tags[] = 'ip:'.$entry['request_ip'];
         }
 
         return $tags;

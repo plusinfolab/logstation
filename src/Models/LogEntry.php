@@ -71,6 +71,7 @@ class LogEntry extends Model
     public function getConnectionName()
     {
         $connection = config('logstation.database.connection');
+
         return $connection ?: config('database.default');
     }
 
@@ -196,7 +197,7 @@ class LogEntry extends Model
      */
     public function hasException(): bool
     {
-        return !empty($this->exception_class);
+        return ! empty($this->exception_class);
     }
 
     /**

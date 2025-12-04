@@ -13,7 +13,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn(string $modelName) => 'PlusinfoLab\\Logstation\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'PlusinfoLab\\Logstation\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
@@ -28,9 +28,9 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
         config()->set('database.connections.testing', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
 
         // Configure LogStation
@@ -39,8 +39,8 @@ class TestCase extends Orchestra
         config()->set('logstation.database.connection', 'testing');
 
         // Run migrations
-        $migrationsPath = __DIR__ . '/../database/migrations';
-        foreach (glob($migrationsPath . '/*.php*') as $migrationFile) {
+        $migrationsPath = __DIR__.'/../database/migrations';
+        foreach (glob($migrationsPath.'/*.php*') as $migrationFile) {
             $migration = include $migrationFile;
             $migration->up();
         }

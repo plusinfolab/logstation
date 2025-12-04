@@ -2,11 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use PlusinfoLab\Logstation\Http\Controllers\DashboardController;
+use PlusinfoLab\Logstation\Http\Controllers\ExportController;
 use PlusinfoLab\Logstation\Http\Controllers\LogEntryController;
 use PlusinfoLab\Logstation\Http\Controllers\SearchController;
-use PlusinfoLab\Logstation\Http\Controllers\ExportController;
 use PlusinfoLab\Logstation\Http\Controllers\SnippetController;
-use PlusinfoLab\Logstation\Http\Controllers\TestController;
 
 $path = config('logstation.path', 'logstation');
 $middleware = config('logstation.middleware', ['web']);

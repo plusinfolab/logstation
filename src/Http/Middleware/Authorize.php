@@ -13,7 +13,7 @@ class Authorize
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Gate::allows('viewLogstation')) {
+        if (! Gate::allows('viewLogstation')) {
             abort(403, 'Unauthorized access to LogStation.');
         }
 

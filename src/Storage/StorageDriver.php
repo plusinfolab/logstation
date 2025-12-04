@@ -2,7 +2,6 @@
 
 namespace PlusinfoLab\Logstation\Storage;
 
-use Illuminate\Support\Collection;
 use PlusinfoLab\Logstation\Models\LogEntry;
 
 abstract class StorageDriver

@@ -4,7 +4,6 @@ namespace PlusinfoLab\Logstation\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PlusinfoLab\Logstation\Facades\Logstation;
-use Inertia\Inertia;
 
 class DashboardController
 {
